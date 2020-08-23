@@ -4,7 +4,6 @@ use parent qw/ Monad::Tiny /;
 
 use Carp ();
 use Exporter qw/ import /;;
-use List::Util qw/ any /;
 use Scalar::Util ();
 
 our $VERSION = 'v0.7.0';
