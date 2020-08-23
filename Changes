@@ -10,6 +10,8 @@ Revision history for {{ $dist->name }}:
 
   - Changed tests to use only Test::More.
 
+  - Keep namespace clean.
+
 v0.6.0  2014-03-12
   - Revision published as a GitHub gist
     https://gist.github.com/robrwo/b5f6451faf755f3e53ec/revisions

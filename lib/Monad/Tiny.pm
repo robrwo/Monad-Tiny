@@ -7,7 +7,7 @@ use warnings;
 
 use Carp ();
 use Const::Fast ();
-use Scalar::Util qw/ blessed refaddr /;
+use Scalar::Util ();
 
 our $VERSION = 'v0.7.0';
 
@@ -20,15 +20,15 @@ sub return {
     bless $self, $class;
     Const::Fast::_make_readonly( $self => 1 );
 
-    $Data{ refaddr $self } = $self;
+    $Data{ Scalar::Util::refaddr $self } = $self;
 }
 
 my %FMap;
 
 sub fmap {
     my ( $class, $func ) = @_;
-    $FMap{ refaddr $func } //= sub {
-        my @args = map { ${ $Data{ refaddr $_ } } } @_;
+    $FMap{ Scalar::Util::refaddr $func } //= sub {
+        my @args = map { ${ $Data{ Scalar::Util::refaddr $_ } } } @_;
         $class->return( $func->(@args) );
 
     };
@@ -41,8 +41,8 @@ sub fmap {
 
 sub join {
     my ($self) = shift;
-    my $val = ${ $Data{ refaddr $self } };
-    if ( blessed($val) && $val->isa(__PACKAGE__) ) {
+    my $val = ${ $Data{ Scalar::Util::refaddr $self } };
+    if ( Scalar::Util::blessed($val) && $val->isa(__PACKAGE__) ) {
         CORE::return $val;
     } else {
         Carp::croak "Not joinable";
@@ -53,7 +53,7 @@ my %Bind;
 
 sub bind {
     my ( $class, $func ) = @_;
-    $Bind{ refaddr $func } //= sub {
+    $Bind{ Scalar::Util::refaddr $func } //= sub {
         $class->fmap($func)->(@_)->join;
     };
 }

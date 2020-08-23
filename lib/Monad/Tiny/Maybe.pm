@@ -5,7 +5,7 @@ use parent qw/ Monad::Tiny /;
 use Carp ();
 use Exporter qw/ import /;;
 use List::Util qw/ any /;
-use Scalar::Util qw/ refaddr /;
+use Scalar::Util ();
 
 our $VERSION = 'v0.7.0';
 
@@ -21,14 +21,14 @@ our @EXPORT_OK = @EXPORT;
 
 sub is_nothing {
     my ($self) = @_;
-    return ( refaddr $self) == ( refaddr &Nothing );
+    return ( Scalar::Util::refaddr $self) == ( Scalar::Util::refaddr &Nothing );
 }
 
 my %MaybeMap;
 
 sub fmap {
     my ( $class, $func ) = @_;
-    $MaybeMap{ refaddr $func } //= sub {
+    $MaybeMap{ Scalar::Util::refaddr $func } //= sub {
         eval { CORE::return $class->SUPER::fmap($func)->(@_); };
         CORE::return Nothing;
     };
