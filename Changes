@@ -14,6 +14,8 @@ Revision history for {{ $dist->name }}:
 
   - Remove unused import.
 
+  - Added Monad::Tiny::Either class.
+
 v0.6.0  2014-03-12
   - Revision published as a GitHub gist
     https://gist.github.com/robrwo/b5f6451faf755f3e53ec/revisions
