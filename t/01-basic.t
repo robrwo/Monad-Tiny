@@ -41,7 +41,7 @@ subtest "Monday::Tiny::Maybe" => sub {
 
     ok( $g->($n)->is_nothing, "lift Nothing" );
 
-    ok my $f = Monad::Tiny::Maybe->fail("Error"), "fail";
+    ok $f = Monad::Tiny::Maybe->fail("Error"), "fail";
     ok $f->is_nothing, "fail == Nothing";
 };
 
